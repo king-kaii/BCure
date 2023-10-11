@@ -45,19 +45,19 @@ public class PatientController {
 	}
 	
 	
-	@PutMapping(value = "/upload/prescription/{id}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-//	@ApiOperation(value = "uploadPrescription of Patient")
-	public ResponseEntity<FileRespnse> uploadPrescription(@RequestPart MultipartFile file,@PathVariable Integer id) throws IOException{
-		
-		String originalFilename = file.getOriginalFilename();
-		patientService.uploadPrescription(file, path, id);
-		
-		
-		return new ResponseEntity<FileRespnse>(new FileRespnse(originalFilename," File saved..."), HttpStatus.OK);
-	}
+//	@PutMapping(value = "/upload/prescription/{id}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+////	@ApiOperation(value = "uploadPrescription of Patient")
+//	public ResponseEntity<FileRespnse> uploadPrescription(@RequestPart MultipartFile file,@PathVariable Integer id) throws IOException{
+//		
+//		String originalFilename = file.getOriginalFilename();
+//		patientService.uploadPrescription(file, path, id);
+//		
+//		
+//		return new ResponseEntity<FileRespnse>(new FileRespnse(originalFilename," File saved..."), HttpStatus.OK);
+//	}
 	
 	@PutMapping(value = "/upload/prescriptions/{id}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-//	@ApiOperation(value = "uploadPrescription of Patient")
+//	@ApiOperation(value = "upload Single/Multiple Prescription of Patient")
 	public ResponseEntity<FileRespnse> uploadPrescriptions(@RequestPart MultipartFile[] files,@PathVariable Integer id) throws IOException{
 	
 		patientService.uploadPrescriptions(files, path, id);

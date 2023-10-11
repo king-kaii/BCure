@@ -40,38 +40,38 @@ public class PatientServiceImpl implements IPatientService {
 		return modelMapper.map(save, PatientDto.class);
 	}
 
-	@Override
-	public String uploadPrescription(MultipartFile file, String path, Integer id) throws IOException {
-		String filename = file.getOriginalFilename();
-
-		String fullPath = path + File.separator + filename;
-
-		// If file Directory not exist
-		File f = new File(path);
-		if (!f.exists()) {
-			f.mkdir();
-		}
-
-		Files.copy(file.getInputStream(), Paths.get(fullPath));
-
-		String location = Constants.BASE_URL + "getImage/" + filename;
-
-		Optional<Patient> findById = patientRepository.findById(id);
-
-		
-
-		if (findById.isPresent()) {
-
-			Patient patient = findById.get();
-			System.out.println(patient);
-//			patient.setUrl(location);
-			patientRepository.save(patient);
-			System.out.println(patient);
-		}
-
-		return filename;
-
-	}
+//	@Override
+//	public String uploadPrescription(MultipartFile file, String path, Integer id) throws IOException {
+//		String filename = file.getOriginalFilename();
+//
+//		String fullPath = path + File.separator + filename;
+//
+//		// If file Directory not exist
+//		File f = new File(path);
+//		if (!f.exists()) {
+//			f.mkdir();
+//		}
+//
+//		Files.copy(file.getInputStream(), Paths.get(fullPath));
+//
+//		String location = Constants.BASE_URL + "getImage/" + filename;
+//
+//		Optional<Patient> findById = patientRepository.findById(id);
+//
+//		
+//
+//		if (findById.isPresent()) {
+//
+//			Patient patient = findById.get();
+//			System.out.println(patient);
+//  //		patient.setUrl(location);
+//			patientRepository.save(patient);
+//			System.out.println(patient);
+//		}
+//
+//		return filename;
+//
+//	}
 
 	@Override
 	public String uploadPrescriptions(MultipartFile[] files, String path, Integer id) throws IOException {

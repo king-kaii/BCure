@@ -10,7 +10,7 @@ public interface IPatientService {
 	
 	public PatientDto craetePatiennt(PatientDto patientDto);
 	
-	public String uploadPrescription(MultipartFile file, String path, Integer id) throws IOException;
+//	public String uploadPrescription(MultipartFile file, String path, Integer id) throws IOException;
 	public String uploadPrescriptions(MultipartFile[] file, String path, Integer id) throws IOException;
 
 }
