@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
@@ -58,9 +58,7 @@ public class PatientServiceImpl implements IPatientService {
 
 		Optional<Patient> findById = patientRepository.findById(id);
 
-		boolean present = findById.isPresent();
-
-		System.out.println(present);
+		
 
 		if (findById.isPresent()) {
 
@@ -77,9 +75,10 @@ public class PatientServiceImpl implements IPatientService {
 
 	@Override
 	public String uploadPrescriptions(MultipartFile[] files, String path, Integer id) throws IOException {
-		
-		
 
+		Optional<Patient> findById = patientRepository.findById(id);
+		Patient patient = findById.get();
+		ArrayList<String> list = new ArrayList<>();
 		for (MultipartFile file : files) {
 
 			String filename = file.getOriginalFilename();
@@ -94,24 +93,31 @@ public class PatientServiceImpl implements IPatientService {
 
 			Files.copy(file.getInputStream(), Paths.get(fullPath));
 
-		String[]	location = { (Constants.BASE_URL + "getImage/" + filename)};
-
-
-		}
-
-		Optional<Patient> findById = patientRepository.findById(id);
-		
-		boolean present = findById.isPresent();
-		
-		System.out.println(present);
-		if (findById.isPresent()) {
+//			String[] location = { (Constants.BASE_URL + "getImage/" + filename) };
 			
-			Patient patient = findById.get();
-			System.out.println(patient);
-//			patient.setUrl(location);
-			patientRepository.save(patient);
-			System.out.println(patient);
+			
+			list.add(Constants.BASE_URL + "getImage/" + filename);
+			
+			String[] location = list.toArray(new String[0]);
+
+
+			
+			if (findById.isPresent()) {
+
+				System.out.println(patient);
+				patient.setUrl(location);
+
+				for (String locate : location) {
+
+					System.out.println("==============" + locate);
+
+				}
+
+			}
+
 		}
+		patientRepository.save(patient);
+		System.out.println(patient);
 		return "Upload Successfully";
 
 	}
