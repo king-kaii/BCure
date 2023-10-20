@@ -1,0 +1,4 @@
+com\bcure\mockito\dao\PatientDao.class
+com\bcure\contact\ContactManager.class
+com\bcure\contact\Contact.class
+com\bcure\mockito\service\PatientService.class
