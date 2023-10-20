@@ -21,10 +21,13 @@ import com.bcure.dto.PatientDto;
 import com.bcure.payload.FileRespnse;
 import com.bcure.service.IPatientService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/patient")
 @CrossOrigin(origins = "http://localhost:4200")
-//@Api("PatientController")
+@Tag(name="PatientController")
 public class PatientController {
 	
 	@Value("${image.path}")
@@ -34,10 +37,10 @@ public class PatientController {
 	IPatientService patientService;
 	
 	@PostMapping("/created")
-//	@ApiOperation(value = "create Patient")
+	@Operation(summary = "create Patient")
 	public ResponseEntity<Integer> createPatient(@RequestBody PatientDto patientDto){
 		System.out.println("Dto accepted");
-		PatientDto createPatient = patientService.craetePatiennt(patientDto);
+		PatientDto createPatient = patientService.craetePatient(patientDto);
 		System.out.println("service called");
 		
 		return new ResponseEntity<Integer>(createPatient.getId(), HttpStatus.CREATED);
@@ -57,7 +60,7 @@ public class PatientController {
 //	}
 	
 	@PutMapping(value = "/upload/prescriptions/{id}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-//	@ApiOperation(value = "upload Single/Multiple Prescription of Patient")
+	@Operation(summary = "upload Single/Multiple Prescription of Patient")
 	public ResponseEntity<FileRespnse> uploadPrescriptions(@RequestPart MultipartFile[] files,@PathVariable Integer id) throws IOException{
 	
 		patientService.uploadPrescriptions(files, path, id);
